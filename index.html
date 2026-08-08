@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JobStart India</title>
+<style>
+body{margin:0;font-family:Arial;background:#f5f7fb;color:#172033}
+header{background:#0b57d0;color:white;padding:25px 18px;border-radius:0 0 22px 22px}
+main{padding:16px}
+input,select,button{width:100%;padding:13px;margin:6px 0;border-radius:10px;box-sizing:border-box}
+input,select{border:1px solid #ddd}
+button{background:#0b57d0;color:white;border:0}
+.card{background:white;padding:16px;margin:12px 0;border-radius:15px}
+h1{margin:0}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>JobStart India 🇮🇳</h1>
+<p>Your First Job Starts Here.</p>
+</header>
+
+<main>
+
+<input id="search" placeholder="Search jobs..." oninput="showJobs()">
+
+<select id="city" onchange="showJobs()">
+<option>All Cities</option>
+<option>Mumbai</option>
+<option>Delhi</option>
+<option>Pune</option>
+<option>Bengaluru</option>
+</select>
+
+<div id="jobs"></div>
+
+<div class="card">
+<h2>📄 Resume Builder</h2>
+<input id="name" placeholder="Full Name">
+<input id="education" placeholder="Education">
+<input id="skills" placeholder="Skills">
+<button onclick="resume()">Create Resume</button>
+<div id="resume"></div>
+</div>
+
+<div class="card">
+<h2>✉️ Cover Letter</h2>
+<input id="role" placeholder="Job Role">
+<input id="company" placeholder="Company Name">
+<button onclick="cover()">Generate Cover Letter</button>
+<div id="cover"></div>
+</div>
+
+</main>
+
+<script>
+
+const jobs=[
+["Airport Ground Staff","Mumbai","Airport","₹18,000–₹28,000"],
+["Security Screener Trainee","Mumbai","Security","₹20,000–₹30,000"],
+["Customer Support Executive","Delhi","BPO","₹16,000–₹25,000"],
+["Data Entry Executive","Pune","Data Entry","₹15,000–₹24,000"],
+["Airport Ticketing Executive","Bengaluru","Airport","₹18,000–₹27,000"]
+];
+
+function showJobs(){
+
+let q=document.getElementById("search").value.toLowerCase();
+let city=document.getElementById("city").value;
+
+let result=jobs.filter(j=>
+(city=="All Cities"||j[1]==city)&&
+j.join(" ").toLowerCase().includes(q)
+);
+
+document.getElementById("jobs").innerHTML=result.map(j=>`
+<div class="card">
+<h3>${j[0]}</h3>
+<p>📍 ${j[1]}</p>
+<p>💼 ${j[2]}</p>
+<p>💰 ${j[3]}</p>
+<button onclick="alert('Verified employer application link will be added before launch.')">
+Apply Now
+</button>
+</div>
+`).join("");
+
+}
+
+function resume(){
+
+let n=document.getElementById("name").value||"Your Name";
+let e=document.getElementById("education").value||"Graduate";
+let s=document.getElementById("skills").value||"Communication";
+
+document.getElementById("resume").innerHTML=`
+<div class="card">
+<h2>${n}</h2>
+<h3>Career Objective</h3>
+<p>Motivated fresher seeking an opportunity to learn and contribute.</p>
+<h3>Education</h3>
+<p>${e}</p>
+<h3>Skills</h3>
+<p>${s}</p>
+</div>`;
+
+}
+
+function cover(){
+
+let r=document.getElementById("role").value||"the position";
+let c=document.getElementById("company").value||"your company";
+
+document.getElementById("cover").innerHTML=`
+<div class="card">
+<p>Dear Hiring Manager,</p>
+<p>I am writing to apply for <b>${r}</b> at <b>${c}</b>. I am a motivated graduate/fresher with good communication skills and a strong willingness to learn.</p>
+<p>Thank you for considering my application.</p>
+<p>Sincerely,<br>Your Name</p>
+</div>`;
+
+}
+
+showJobs();
+
+</script>
+
+</body>
+</html>
