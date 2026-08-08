@@ -57,72 +57,108 @@ h1{margin:0}
 
 <script>
 
-const jobs=[
-["Airport Ground Staff","Mumbai","Airport","₹18,000–₹28,000"],
-["Security Screener Trainee","Mumbai","Security","₹20,000–₹30,000"],
-["Customer Support Executive","Delhi","BPO","₹16,000–₹25,000"],
-["Data Entry Executive","Pune","Data Entry","₹15,000–₹24,000"],
-["Airport Ticketing Executive","Bengaluru","Airport","₹18,000–₹27,000"]
+<script>
+const jobs = [
+  ["Airport Ground Staff","Mumbai","Airport","₹18,000–₹28,000",
+   "https://careers.adani.com/"],
+
+  ["AI Airport Services Jobs","Mumbai","AI Airport Services","As per notification",
+   "https://www.aiasl.in/Recruitment"],
+
+  ["Security Screener / Airport Security","Mumbai","Security","As per notification",
+   "https://www.aiasl.in/Recruitment"],
+
+  ["Passenger Service Agent","Mumbai","Airport","As per notification",
+   "https://www.aiasl.in/Recruitment"],
+
+  ["Airport Ticketing Executive","Mumbai","Airport","₹18,000–₹30,000",
+   "https://careers.adani.com/"]
 ];
 
 function showJobs(){
 
-let q=document.getElementById("search").value.toLowerCase();
-let city=document.getElementById("city").value;
+  let q = document.getElementById("search").value.toLowerCase();
+  let city = document.getElementById("city").value;
 
-let result=jobs.filter(j=>
-(city=="All Cities"||j[1]==city)&&
-j.join(" ").toLowerCase().includes(q)
-);
+  let result = jobs.filter(j =>
+    (city === "All Cities" || j[1] === city) &&
+    j.join(" ").toLowerCase().includes(q)
+  );
 
-document.getElementById("jobs").innerHTML=result.map(j=>`
-<div class="card">
-<h3>${j[0]}</h3>
-<p>📍 ${j[1]}</p>
-<p>💼 ${j[2]}</p>
-<p>💰 ${j[3]}</p>
-<button onclick="alert('Verified employer application link will be added before launch.')">
-Apply Now
-</button>
-</div>
-`).join("");
+  document.getElementById("jobs").innerHTML = result.map(j => `
+    <div class="card">
 
-}
+      <h3>${j[0]}</h3>
 
-function resume(){
+      <p>📍 ${j[1]}</p>
+      <p>💼 ${j[2]}</p>
+      <p>💰 ${j[3]}</p>
 
-let n=document.getElementById("name").value||"Your Name";
-let e=document.getElementById("education").value||"Graduate";
-let s=document.getElementById("skills").value||"Communication";
+      <button onclick="applyJob('${j[4]}')">
+        Apply Now
+      </button>
 
-document.getElementById("resume").innerHTML=`
-<div class="card">
-<h2>${n}</h2>
-<h3>Career Objective</h3>
-<p>Motivated fresher seeking an opportunity to learn and contribute.</p>
-<h3>Education</h3>
-<p>${e}</p>
-<h3>Skills</h3>
-<p>${s}</p>
-</div>`;
+    </div>
+  `).join("");
 
 }
 
-function cover(){
-
-let r=document.getElementById("role").value||"the position";
-let c=document.getElementById("company").value||"your company";
-
-document.getElementById("cover").innerHTML=`
-<div class="card">
-<p>Dear Hiring Manager,</p>
-<p>I am writing to apply for <b>${r}</b> at <b>${c}</b>. I am a motivated graduate/fresher with good communication skills and a strong willingness to learn.</p>
-<p>Thank you for considering my application.</p>
-<p>Sincerely,<br>Your Name</p>
-</div>`;
-
+function applyJob(url){
+  window.open(url, "_blank");
 }
 
+
+/* 🤖 AI JOB ASSISTANT */
+
+function askAI(){
+
+  let question = document.getElementById("aiQuestion").value
+    .toLowerCase()
+    .trim();
+
+  let answer = "";
+
+  if(!question){
+    answer = "Apna question likho. Example: Airport job ke liye qualification kya chahiye?";
+  }
+
+  else if(question.includes("resume")){
+    answer = "AI Assistant aapke liye Resume Objective, Skills aur basic resume format banane me help kar sakta hai.";
+  }
+
+  else if(question.includes("interview")){
+    answer = "Airport interview ke liye common questions: Tell me about yourself, Why do you want this job?, Strengths, Weaknesses aur customer handling.";
+  }
+
+  else if(question.includes("airport")){
+    answer = "Airport jobs me Ground Staff, Passenger Service, Ticketing, Security aur Ramp Services jaise roles mil sakte hain.";
+  }
+
+  else if(question.includes("aiasl") || question.includes("air india")){
+    answer = "AI Airport Services Limited ki official recruitment notifications ke liye AIASL Recruitment page check karein.";
+  }
+
+  else if(question.includes("eligibility") || question.includes("qualification")){
+    answer = "Eligibility har vacancy ke notification par depend karti hai. Apply karne se pehle official employer notification zaroor check karein.";
+  }
+
+  else if(question.includes("salary")){
+    answer = "Salary company, job role, location aur experience ke according alag hoti hai. Official vacancy notification ko priority dein.";
+  }
+
+  else if(question.includes("cover letter")){
+    answer = "Cover Letter ke liye apni qualification, job role aur location batao. AI Assistant uska draft bana sakta hai.";
+  }
+
+  else {
+    answer = "Main JobStart India AI Assistant hoon 🤖. Aap job, resume, interview, eligibility, salary ya cover letter ke baare me pooch sakte ho.";
+  }
+
+  document.getElementById("aiAnswer").innerText = answer;
+}
+
+
+/* Page load par jobs dikhao */
 showJobs();
 
 </script>
